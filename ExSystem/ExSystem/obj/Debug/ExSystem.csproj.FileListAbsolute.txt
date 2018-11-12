@@ -8,3 +8,13 @@ C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\obj\Debug\ExSystem.cspr
 C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\obj\Debug\ExSystem.csproj.CoreCompileInputs.cache
 C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\obj\Debug\ExSystem.exe
 C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\obj\Debug\ExSystem.pdb
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\bin\Debug\ExSystem.exe.config
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\bin\Debug\ExSystem.exe
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\bin\Debug\ExSystem.pdb
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.csprojAssemblyReference.cache
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.Form1.resources
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.Properties.Resources.resources
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.csproj.GenerateResource.cache
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.csproj.CoreCompileInputs.cache
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.exe
+C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.pdb
