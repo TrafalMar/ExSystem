@@ -18,3 +18,7 @@ C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSyste
 C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.csproj.CoreCompileInputs.cache
 C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.exe
 C:\Users\TrafalMar\Documents\GitHub\ExSystem\ExSystem\ExSystem\obj\Debug\ExSystem.pdb
+C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\bin\Debug\MetroFramework.Design.dll
+C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\bin\Debug\MetroFramework.dll
+C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\vladi\Documents\GitHub\Expert\ExSystem\ExSystem\obj\Debug\ExSystem.csproj.CopyComplete

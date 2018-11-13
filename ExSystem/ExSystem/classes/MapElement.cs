@@ -10,10 +10,13 @@ namespace ExSystem.classes
     public class MapElement
     {
         public TreeNode node { get; set; }
+        public TreeNode parent { get; set; }
         public int position { get; set; }
-        public MapElement(TreeNode node, int position) {
+
+        public MapElement(TreeNode node, int position,TreeNode parent) {
             this.node = node;
             this.position = position;
+            this.parent = parent;
         }
     }
 }

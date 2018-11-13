@@ -1,4 +1,5 @@
 ﻿using ExSystem.classes;
+using MetroFramework.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,18 +20,34 @@ namespace ExSystem
         }
 
         List<RadioButton> labels = new List<RadioButton>();
+        List<MetroRadioButton> _radioButtonGroup = new List<MetroRadioButton>();
         TreeView tree;
         TreeView editorTree;
         List<MapElement> list;
         private void Form1_Load(object sender, EventArgs e)
         {
             labels.AddRange(new RadioButton[] { radioButton1, radioButton2, radioButton3, radioButton4, radioButton5, radioButton6 });
+            _radioButtonGroup.AddRange(new MetroRadioButton[] { root_radio, child_radio });
             tree = treeView1;
             editorTree = treeView2;
             list = treeToList(editorTree);
+
             foreach (MapElement nd in list)
             {
-                tree.Nodes.Add(new TreeNode("Salut"));
+                if (nd.parent == null)
+                {
+                    tree.Nodes.Add(nd.node.Text);
+                }
+                else
+                {
+                    foreach (TreeNode node in Collect(tree.Nodes))
+                    {
+                        if (node.Text == nd.parent.Text)
+                        {
+                            node.Nodes.Add(nd.node.Text);
+                        }
+                    }
+                }
             }
 
             foreach (RadioButton label in labels)
@@ -48,14 +65,18 @@ namespace ExSystem
                 labels[i].Visible = true;
                 i++;
             }
-            
+
+            //css
+
         }
+
 
         TreeNodeCollection currentNodes;
         private void button1_Click(object sender, EventArgs e)
         {
             RadioButton selectedRadio;
-            if (currentNodes == null) {
+            if (currentNodes == null)
+            {
                 currentNodes = tree.Nodes;
             }
             foreach (RadioButton radio in labels)
@@ -78,7 +99,8 @@ namespace ExSystem
                             {
                                 labels[i].Text = nd.Text;
                                 labels[i].Visible = true;
-                                if (nd.Nodes.Count == 0) {
+                                if (nd.Nodes.Count == 0)
+                                {
                                     labels[i].Enabled = false;
                                     labels[i].Visible = false;
                                     listCount++;
@@ -95,13 +117,15 @@ namespace ExSystem
 
         }
 
-        public void clear() {
+        public void clear()
+        {
             foreach (RadioButton label in labels)
             {
                 label.Visible = false;
                 label.Enabled = true;
             }
-            foreach (Label lab in this.Controls.Find("Answer",true)) {
+            foreach (Label lab in this.Controls.Find("Answer", true))
+            {
                 lab.Visible = false;
             }
         }
@@ -136,13 +160,14 @@ namespace ExSystem
             }
         }
 
-        public Label changeToLabel(RadioButton radio) {
+        public Label changeToLabel(RadioButton radio)
+        {
             Label label = new Label();
             label.Name = "Answer";
             label.Left = radio.Left;
             label.Text = radio.Text;
             label.Top = radio.Top;
-            label.Font = new Font("Arial",10);
+            label.Font = new Font("Arial", 10);
             label.AutoSize = true;
             label.Visible = true;
 
@@ -152,20 +177,22 @@ namespace ExSystem
         IEnumerable<MapElement> treeToMap(TreeNodeCollection nodes)
         {
             int position = 0;
-            
+
             foreach (TreeNode node in nodes)
             {
-                MapElement map = new MapElement(node, position);
+                MapElement map = new MapElement(node, position, node.Parent);
                 yield return map;
-                foreach (var child in treeToMap(node.Nodes)) {
+                foreach (var child in treeToMap(node.Nodes))
+                {
                     int curPosition = child.position + 1;
-                    map = new MapElement(child.node, curPosition);
+                    map = new MapElement(child.node, curPosition, child.node.Parent);
                     yield return map;
                 }
             }
         }
 
-        public List<MapElement> treeToList(TreeView treeView) {
+        public List<MapElement> treeToList(TreeView treeView)
+        {
             List<MapElement> list = new List<MapElement>();
             foreach (MapElement lister in treeToMap(treeView.Nodes))
             {
@@ -175,5 +202,58 @@ namespace ExSystem
             return list;
         }
 
+        //supervisor
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            if (rb.Checked)
+            {
+                foreach (RadioButton other in _radioButtonGroup)
+                {
+                    if (other == rb)
+                    {
+                        continue;
+                    }
+                    other.Checked = false;
+                }
+            }
+        }
+
+      
+
+        private void onBorderPaint(object sender, MetroFramework.Drawing.MetroPaintEventArgs e)
+        {
+            MetroPanel panel = sender as MetroPanel;
+            ControlPaint.DrawBorder(e.Graphics, panel.ClientRectangle, Color.LightBlue, ButtonBorderStyle.Solid);
+        }
+
+        private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            TreeView tree = sender as TreeView;
+            metroTextBox2.Text = tree.SelectedNode.Text;
+            l1.Text = "Кількість синів: " + tree.SelectedNode.Nodes.Count;
+            l2.Text = "Значення: " + (tree.SelectedNode.Nodes.Count != 0 ? "Гілка" : "Рішення");
+            l3.Text = "Розгорнута: " + (tree.SelectedNode.IsExpanded ? "Так" : "Ні");
+        }
+
+        private void treeView2_AfterExpand(object sender, TreeViewEventArgs e)
+        {
+            TreeView tree = sender as TreeView;
+            if (tree.SelectedNode != null)
+            l3.Text = "Розгорнута: " + (tree.SelectedNode.IsExpanded ? "Так" : "Ні");
+        }
+
+        private void treeView2_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (!e.Node.IsExpanded)
+            {
+                e.Node.Expand();
+            }
+            else
+            {
+                e.Node.Collapse();
+            }
+        }
     }
+
 }
