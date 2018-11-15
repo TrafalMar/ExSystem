@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ExSystem
 {
@@ -34,17 +36,17 @@ namespace ExSystem
 
             foreach (MapElement nd in list)
             {
-                if (nd.parent == null)
+                if (nd.parent == "none")
                 {
-                    tree.Nodes.Add(nd.node.Text);
+                    tree.Nodes.Add(nd.node);
                 }
                 else
                 {
                     foreach (TreeNode node in Collect(tree.Nodes))
                     {
-                        if (node.Text == nd.parent.Text)
+                        if (node.Text == nd.parent)
                         {
-                            node.Nodes.Add(nd.node.Text);
+                            node.Nodes.Add(nd.node);
                         }
                     }
                 }
@@ -180,12 +182,15 @@ namespace ExSystem
 
             foreach (TreeNode node in nodes)
             {
-                MapElement map = new MapElement(node, position, node.Parent);
+                string parent = "";
+                if (node.Parent == null) { parent = "none"; } else { parent = node.Parent.Text; }
+
+                MapElement map = new MapElement(node.Text, position, parent);
                 yield return map;
                 foreach (var child in treeToMap(node.Nodes))
                 {
                     int curPosition = child.position + 1;
-                    map = new MapElement(child.node, curPosition, child.node.Parent);
+                    map = new MapElement(child.node, curPosition, child.parent);
                     yield return map;
                 }
             }
@@ -252,6 +257,52 @@ namespace ExSystem
             else
             {
                 e.Node.Collapse();
+            }
+        }
+
+        private void metroTextBox3_TextChanged(object sender, EventArgs e)
+        {
+            var text = this.filenameBox.Text;
+            if (text != "")
+            {
+                filename.Text = text + ".xml";
+            }
+            else {
+                filename.Text = "filename";
+            }
+        }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            XmlSerializer xs = new XmlSerializer(typeof(List<MapElement>));
+
+            if (filename.Text == "filename")
+            {
+                filename.Text = "default.xml";
+                TextWriter writer = new StreamWriter(filename.Text);
+                xs.Serialize(writer, list);
+                writer.Close();
+                //openFileDialog1 file directory
+                string path = Environment.CurrentDirectory;
+                System.Diagnostics.Process.Start(path);
+            }
+            else {
+                saveFileDialog1.Filter = "txt files (*.xml)|*.xml";
+                saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
+                saveFileDialog1.FileName = filename.Text;
+                
+                TextWriter writer;
+                string stream;
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
+                    if ((stream = saveFileDialog1.FileName) != null) {
+                        writer = new StreamWriter(stream);
+                        xs.Serialize(writer, list);
+                        writer.Close();
+                        //openFileDialog1 file directory
+                        string path = Environment.CurrentDirectory;
+                        System.Diagnostics.Process.Start(path);
+                    }
+                }
             }
         }
     }
