@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <ArrayOfMapElement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MapElement>
     <node>У вас комп'ютер</node>
@@ -245,4 +245,52 @@
     <parent>У вас шизофренія</parent>
     <position>1</position>
   </MapElement>
-</ArrayOfMapElement>
+</ArrayOfMapElement>Кажіть щоб вас підвезлий кудись</node>
+    <parent>Сильна</parent>
+    <position>2</position>
+  </MapElement>
+  <MapElement>
+    <node>
+Будете терпіти буде гірше</node>
+    <parent>Сильна</parent>
+    <position>2</position>
+  </MapElement>
+  <MapElement>
+    <node>Поговоріль із своїм собакою</node>
+    <parent>Сильна</parent>
+    <position>2</position>
+  </MapElement>
+  <MapElement>
+    <node>Помірна</node>
+    <parent>У вас шизофренія</parent>
+    <position>1</position>
+  </MapElement>
+  <MapElement>
+    <node>Їжте багато овочів 
+</node>
+    <parent>Помірна</parent>
+    <position>2</position>
+  </MapElement>
+  <MapElement>
+    <node>Щоб не стати овочем їште фрукти</node>
+    <parent>Помірна</parent>
+    <position>2</position>
+  </MapElement>
+  <MapElement>
+    <node>
+Слабка</node>
+    <parent>У вас шизофренія</parent>
+    <position>1</position>
+  </MapElement>
+  <MapElement>
+    <node>Саме цікаве тільки попереду</node>
+    <parent>
+Слабка</parent>
+    <position>2</position>
+  </MapElement>
+  <MapElement>
+    <node>Співчуваю...</node>
+    <parent>У вас шизофренія</parent>
+    <position>1</position>
+  </MapElement>
+</ArrayOfMapElement>>

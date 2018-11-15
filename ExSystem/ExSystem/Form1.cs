@@ -34,23 +34,7 @@ namespace ExSystem
             editorTree = treeView2;
             list = treeToList(editorTree);
 
-            foreach (MapElement nd in list)
-            {
-                if (nd.parent == "none")
-                {
-                    tree.Nodes.Add(nd.node);
-                }
-                else
-                {
-                    foreach (TreeNode node in Collect(tree.Nodes))
-                    {
-                        if (node.Text == nd.parent)
-                        {
-                            node.Nodes.Add(nd.node);
-                        }
-                    }
-                }
-            }
+            updateVaues(list, tree);
 
             foreach (RadioButton label in labels)
             {
@@ -72,6 +56,28 @@ namespace ExSystem
 
         }
 
+        public void updateVaues(List<MapElement> list, TreeView tree)
+        {
+
+            tree.Nodes.Clear();
+            foreach (MapElement nd in list)
+            {
+                if (nd.parent == "none")
+                {
+                    tree.Nodes.Add(nd.node);
+                }
+                else
+                {
+                    foreach (TreeNode node in Collect(tree.Nodes))
+                    {
+                        if (node.Text == nd.parent)
+                        {
+                            node.Nodes.Add(nd.node);
+                        }
+                    }
+                }
+            }
+        }
 
         TreeNodeCollection currentNodes;
         private void button1_Click(object sender, EventArgs e)
@@ -162,6 +168,16 @@ namespace ExSystem
             }
         }
 
+        public TreeNode findNode(string text,TreeView tree) {
+            foreach (var node in Collect(tree.Nodes))
+            {
+                if (node.Text.Equals(text)) {
+                    return node;
+                }
+            }
+            return null;
+        }
+
         public Label changeToLabel(RadioButton radio)
         {
             Label label = new Label();
@@ -224,7 +240,7 @@ namespace ExSystem
             }
         }
 
-      
+
 
         private void onBorderPaint(object sender, MetroFramework.Drawing.MetroPaintEventArgs e)
         {
@@ -236,6 +252,7 @@ namespace ExSystem
         {
             TreeView tree = sender as TreeView;
             metroTextBox2.Text = tree.SelectedNode.Text;
+            rename.Text = tree.SelectedNode.Text;
             l1.Text = "Кількість синів: " + tree.SelectedNode.Nodes.Count;
             l2.Text = "Значення: " + (tree.SelectedNode.Nodes.Count != 0 ? "Гілка" : "Рішення");
             l3.Text = "Розгорнута: " + (tree.SelectedNode.IsExpanded ? "Так" : "Ні");
@@ -245,7 +262,7 @@ namespace ExSystem
         {
             TreeView tree = sender as TreeView;
             if (tree.SelectedNode != null)
-            l3.Text = "Розгорнута: " + (tree.SelectedNode.IsExpanded ? "Так" : "Ні");
+                l3.Text = "Розгорнута: " + (tree.SelectedNode.IsExpanded ? "Так" : "Ні");
         }
 
         private void treeView2_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -267,7 +284,8 @@ namespace ExSystem
             {
                 filename.Text = text + ".xml";
             }
-            else {
+            else
+            {
                 filename.Text = "filename";
             }
         }
@@ -279,23 +297,26 @@ namespace ExSystem
             if (filename.Text == "filename")
             {
                 filename.Text = "default.xml";
-                TextWriter writer = new StreamWriter(filename.Text);
+                FileStream writer = new FileStream(filename.Text, FileMode.OpenOrCreate);
                 xs.Serialize(writer, list);
                 writer.Close();
                 //openFileDialog1 file directory
                 string path = Environment.CurrentDirectory;
                 System.Diagnostics.Process.Start(path);
             }
-            else {
+            else
+            {
                 saveFileDialog1.Filter = "txt files (*.xml)|*.xml";
                 saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
                 saveFileDialog1.FileName = filename.Text;
-                
-                TextWriter writer;
+
+                FileStream writer;
                 string stream;
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
-                    if ((stream = saveFileDialog1.FileName) != null) {
-                        writer = new StreamWriter(stream);
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    if ((stream = saveFileDialog1.FileName) != null)
+                    {
+                        writer = new FileStream(stream, FileMode.OpenOrCreate);
                         xs.Serialize(writer, list);
                         writer.Close();
                         //openFileDialog1 file directory
@@ -303,6 +324,69 @@ namespace ExSystem
                         System.Diagnostics.Process.Start(path);
                     }
                 }
+            }
+        }
+
+        private void завантажитиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XmlSerializer xs = new XmlSerializer(typeof(List<MapElement>));
+            openFileDialog1.Filter = "txt files (*.xml)|*.xml";
+            openFileDialog1.InitialDirectory = Environment.CurrentDirectory;
+            FileStream reader;
+            string stream;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((stream = openFileDialog1.FileName) != null)
+                {
+                    reader = new FileStream(stream, FileMode.OpenOrCreate);
+                    list = (List<MapElement>)xs.Deserialize(reader);
+                    reader.Close();
+
+                    updateVaues(list, treeView1);
+                    updateVaues(list, treeView2);
+
+
+                }
+            }
+        }
+
+        private void metroTextBox5_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (editorTree.SelectedNode != null && editorTree.SelectedNode.Text != "")
+                if (e.KeyCode == Keys.Enter)
+                {
+                    editorTree.SelectedNode.Text = this.rename.Text;
+                    list = treeToList(editorTree);
+                }
+        }
+
+        private void addToTreeButton_Click(object sender, EventArgs e)
+        {
+            if (editorTree.SelectedNode != null)
+            {
+            editorTree.SelectedNode.Nodes.Add(this.child_name.Text);
+            list = treeToList(editorTree);
+
+                //editorTree.SelectedNode = findNode(this.child_name.Text,editorTree);
+                this.child_name.Text = "";
+            }
+        }
+
+        private void child_name_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addToTreeButton_Click(sender, e);
+            }
+        }
+
+        private void metroButton1_Click(object sender, EventArgs e)
+        {
+            if (editorTree.SelectedNode != null)
+            {
+                editorTree.SelectedNode.Nodes.Remove(findNode(editorTree.SelectedNode.Text, editorTree));
+                list = treeToList(editorTree);
+                this.child_name.Text = "";
             }
         }
     }
