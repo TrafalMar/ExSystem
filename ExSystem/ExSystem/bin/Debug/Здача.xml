@@ -56,6 +56,17 @@
     <position>2</position>
   </MapElement>
   <MapElement>
+    <node>фів</node>
+    <parent>Перевірте з'єднання з комп'ютером</parent>
+    <position>3</position>
+  </MapElement>
+  <MapElement>
+    <node>
+дфілів</node>
+    <parent>Перевірте з'єднання з комп'ютером</parent>
+    <position>3</position>
+  </MapElement>
+  <MapElement>
     <node>Перевірте цілісність шнура</node>
     <parent>Не працює миша</parent>
     <position>2</position>
@@ -241,57 +252,8 @@
     <position>0</position>
   </MapElement>
   <MapElement>
-    <node>Сильна</node>
+    <node>Співчуваю</node>
     <parent>У вас шизофренія</parent>
     <position>1</position>
   </MapElement>
-  <MapElement>
-    <node>Кажіть щоб вас підвезлий кудись</node>
-    <parent>Сильна</parent>
-    <position>2</position>
-  </MapElement>
-  <MapElement>
-    <node>
-Будете терпіти буде гірше</node>
-    <parent>Сильна</parent>
-    <position>2</position>
-  </MapElement>
-  <MapElement>
-    <node>Поговоріль із своїм собакою</node>
-    <parent>Сильна</parent>
-    <position>2</position>
-  </MapElement>
-  <MapElement>
-    <node>Помірна</node>
-    <parent>У вас шизофренія</parent>
-    <position>1</position>
-  </MapElement>
-  <MapElement>
-    <node>Їжте багато овочів 
-</node>
-    <parent>Помірна</parent>
-    <position>2</position>
-  </MapElement>
-  <MapElement>
-    <node>Щоб не стати овочем їште фрукти</node>
-    <parent>Помірна</parent>
-    <position>2</position>
-  </MapElement>
-  <MapElement>
-    <node>
-Слабка</node>
-    <parent>У вас шизофренія</parent>
-    <position>1</position>
-  </MapElement>
-  <MapElement>
-    <node>Саме цікаве тільки попереду</node>
-    <parent>
-Слабка</parent>
-    <position>2</position>
-  </MapElement>
-  <MapElement>
-    <node>Співчуваю...</node>
-    <parent>У вас шизофренія</parent>
-    <position>1</position>
-  </MapElement>
-</ArrayOfMapElement>>
+</ArrayOfMapElement>

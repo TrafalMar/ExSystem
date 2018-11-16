@@ -33,9 +33,12 @@ namespace ExSystem
             tree = treeView1;
             editorTree = treeView2;
             list = treeToList(editorTree);
-
             updateVaues(list, tree);
+            loadLabels();
+        }
 
+        public void loadLabels()
+        {
             foreach (RadioButton label in labels)
             {
                 label.Text = "";
@@ -51,9 +54,6 @@ namespace ExSystem
                 labels[i].Visible = true;
                 i++;
             }
-
-            //css
-
         }
 
         public void updateVaues(List<MapElement> list, TreeView tree)
@@ -168,10 +168,12 @@ namespace ExSystem
             }
         }
 
-        public TreeNode findNode(string text,TreeView tree) {
+        public TreeNode findNode(string text, TreeView tree)
+        {
             foreach (var node in Collect(tree.Nodes))
             {
-                if (node.Text.Equals(text)) {
+                if (node.Text.Equals(text))
+                {
                     return node;
                 }
             }
@@ -294,15 +296,17 @@ namespace ExSystem
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<MapElement>));
 
-            if (filename.Text == "filename")
+            if (filenameBox.Text == "")
             {
                 filename.Text = "default.xml";
-                FileStream writer = new FileStream(filename.Text, FileMode.OpenOrCreate);
-                xs.Serialize(writer, list);
-                writer.Close();
-                //openFileDialog1 file directory
-                string path = Environment.CurrentDirectory;
-                System.Diagnostics.Process.Start(path);
+                using (FileStream writer = new FileStream(filename.Text, FileMode.Create))
+                {
+                    xs.Serialize(writer, list);
+                    //openFileDialog1 file directory
+                    string path = Environment.CurrentDirectory;
+                    System.Diagnostics.Process.Start(path);
+                    writer.Close();
+                }
             }
             else
             {
@@ -316,12 +320,15 @@ namespace ExSystem
                 {
                     if ((stream = saveFileDialog1.FileName) != null)
                     {
-                        writer = new FileStream(stream, FileMode.OpenOrCreate);
-                        xs.Serialize(writer, list);
-                        writer.Close();
-                        //openFileDialog1 file directory
-                        string path = Environment.CurrentDirectory;
-                        System.Diagnostics.Process.Start(path);
+                        using (writer = new FileStream(stream, FileMode.Create))
+                        {
+                            xs.Serialize(writer, list);
+
+                            //openFileDialog1 file directory
+                            string path = Environment.CurrentDirectory;
+                            System.Diagnostics.Process.Start(path);
+                            writer.Close();
+                        }
                     }
                 }
             }
@@ -348,6 +355,7 @@ namespace ExSystem
 
                 }
             }
+            button2_Click(sender, e);
         }
 
         private void metroTextBox5_KeyDown(object sender, KeyEventArgs e)
@@ -362,13 +370,22 @@ namespace ExSystem
 
         private void addToTreeButton_Click(object sender, EventArgs e)
         {
-            if (editorTree.SelectedNode != null)
+            if (child_radio.Checked)
             {
-            editorTree.SelectedNode.Nodes.Add(this.child_name.Text);
-            list = treeToList(editorTree);
+                if (editorTree.SelectedNode != null)
+                {
+                    editorTree.SelectedNode.Nodes.Add(this.child_name.Text);
+                    list = treeToList(editorTree);
 
-                //editorTree.SelectedNode = findNode(this.child_name.Text,editorTree);
-                this.child_name.Text = "";
+                    //editorTree.SelectedNode = findNode(this.child_name.Text,editorTree);
+                    this.child_name.Text = "";
+                }
+            }
+            else
+            {
+                string rootName = root_name.Text;
+                editorTree.Nodes.Add(rootName);
+                list = treeToList(editorTree);
             }
         }
 
@@ -387,6 +404,22 @@ namespace ExSystem
                 editorTree.SelectedNode.Nodes.Remove(findNode(editorTree.SelectedNode.Text, editorTree));
                 list = treeToList(editorTree);
                 this.child_name.Text = "";
+            }
+        }
+
+        private void root_name_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addToTreeButton_Click(sender, e);
+            }
+        }
+
+        private void filenameBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                metroButton2_Click(sender, e);
             }
         }
     }
