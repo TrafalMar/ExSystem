@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -421,6 +422,14 @@ namespace ExSystem
             {
                 metroButton2_Click(sender, e);
             }
+        }
+
+      
+
+        private void документаціяToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Process.Start(Environment.CurrentDirectory + @"\documentation\documentation.chm");
+
         }
     }
 

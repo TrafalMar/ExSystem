@@ -1,0 +1,41 @@
+body{
+    padding:0;
+    margin:0;
+}
+.container{
+    padding: 50px 20px 20px 20px ;
+    /* text-indent: 1.5em; */
+}
+
+.header{
+padding:10px 10px 10px 50px;
+background:red;
+color:white;
+font-family:Arial;
+}
+
+.thumbnail{
+    /* height: 200px; */
+    align-items: center;
+    width:400px;
+    border: solid 1px rgba(0,0,0,.3);
+    margin: 20px 0 0 20px;
+    float: left;
+}
+hr{
+    clear: both;
+}
+.thumbnail .thumbHeader{
+    background: red;
+    padding: 10px;
+    color:white;
+    font-family: 'Courier New', Courier, monospace
+}
+.thumbnail .caption{
+    padding: 15px;   
+}
+
+.list ul {
+    display: block;
+}
+
